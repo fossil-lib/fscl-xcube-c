@@ -1,6 +1,8 @@
-# Project Template README
+# Fossil XCube 2D - **C**
 
-Welcome to the **Project Template** repository! This README provides user-friendly instructions for setting up, compiling, testing, and running a project using the Meson build system on Windows, macOS, and Linux systems. Please note that the Meson build system is required for successfully building this project.
+Fossil Standard Component Libraries (FSCL) by Fossil Logic represent the pinnacle of software development, embodying our commitment to quality, security, and practicality. These meticulously curated libraries serve as the cornerstone for crafting cutting-edge applications, offering a foundation built on excellence in code. With FSCL, Fossil Logic empowers developers to seamlessly integrate standardized components that elevate the overall performance and reliability of digital solutions, setting a new standard for software excellence.
+
+Unleash your creativity in the visual realm with XCude 2D Graphics. This library is a powerhouse for 2D graphics, offering a versatile set of tools and functions to bring your visualizations to life. From rendering to animation, XCude 2D Graphics empowers developers to craft visually stunning and immersive user experiences.
 
 ## Who is This For?
 
@@ -28,11 +30,11 @@ Create a directory named subprojects in the root directory, next create a file n
    #  FSCL Wrap File. #
    # ================ #
    [wrap-git]
-   url = https://github.com/fossil-lib/fscl-<name>-c.git
+   url = https://github.com/fossil-lib/fscl-xcube-c.git
    revision = main
    
    [provide]
-   fscl-x<name>-c = fscl_x<name>_c_dep
+   fscl-xcube-c = fscl_xcube_c_dep
    ```
 
 2. **Integrate Wrap File in Meson Build**:
@@ -42,7 +44,7 @@ Create a directory named subprojects in the root directory, next create a file n
        default_options : ['warning_level=3'])
 
    exe = executable('my_project', 'my_project.c',
-       dependencies : dependency('fscl-x<name>-c'), # add this line
+       dependencies : dependency('fscl-xcube-c'), # add this line
        install : true)
 
    test('basic', exe)
@@ -68,11 +70,11 @@ meson setup builddir -Dwith_test=enabled
 
 ## Contributing
 
-If you're interested in contributing to this project, please consider opening pull requests or creating issues on the [GitHub repository](https://github.com/dreamer-coding-555/meson-lib-c).
+If you're interested in contributing to this project, please consider opening pull requests or creating issues on the [GitHub repository](https://github.com/fossil-lib/fscl-xcube-c).
 
 ## Feedback and Support
 
-If you encounter any issues, have questions, or would like to provide feedback, don't hesitate to open an issue on the [GitHub repository](https://github.com/dreamer-coding-555/meson-lib-c/issues).
+If you encounter any issues, have questions, or would like to provide feedback, don't hesitate to open an issue on the [GitHub repository](https://github.com/fossil-lib/fscl-xcube-c/issues).
 
 ## License
 
