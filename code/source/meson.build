@@ -1,4 +1,4 @@
-code = files('module.c')
+code = files('basic.c')
 
 lib = static_library('fscl-xcube-c',
     code,
