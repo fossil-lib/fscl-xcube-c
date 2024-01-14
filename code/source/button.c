@@ -12,16 +12,21 @@ Description:
 */
 #include "fossil/button.h"
 
-// Create and initialize a new button
-xbutton fscl_button_create(int32_t x, int32_t y, int32_t width, int32_t height, const char* label, xcolor color) {
-    xbutton button = {x, y, width, height, color};
+// Create and initialize a new button with a callback function
+xbutton fscl_button_create(int32_t x, int32_t y, int32_t width, int32_t height, const char* label, xcolor color, button_callback callback) {
+    xbutton button = {x, y, width, height, color, callback};
     fscl_button_set_label(&button, label);
     return button;
 }
 
-// Draw a button on the active window
+// Draw a button on the active window and invoke the callback if present
 void fscl_button_draw(xmanager* manager, xbutton button) {
     fscl_manager_draw_active(manager, button);
+
+    // Check if the button has a callback and invoke it
+    if (button.click_callback != NULL) {
+        button.click_callback();
+    }
 }
 
 // Set the label of a button
