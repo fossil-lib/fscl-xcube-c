@@ -20,6 +20,17 @@ extern "C"
 
 #include <xcube/basic.h> // all basic cube code
 
+// Structure for the label with enhanced functionality
+typedef struct {
+    int32_t x;
+    int32_t y;
+    char text[100];
+    xcolor color;
+    int font_size;
+    int text_alignment;  // 0: left, 1: center, 2: right
+    int visible;         // Visibility flag (1: visible, 0: hidden)
+} xlabel;
+
 // Function prototypes for label-related functions
 xlabel fscl_label_create(int32_t x, int32_t y, const char* text, xcolor color);
 void fscl_label_draw(xmanager* manager, xlabel label);
