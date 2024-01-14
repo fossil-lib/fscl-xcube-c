@@ -70,31 +70,6 @@ typedef struct {
 } xpoint;
 
 typedef struct {
-    int32_t x;
-    int32_t y;
-    int32_t width;
-    int32_t height;
-    char label[XLABEL_MAX_SIZE]; // Adjust the size as needed
-    xcolor color;
-} xbutton;
-
-typedef struct {
-    int32_t x;
-    int32_t y;
-    char text[XTEXT_MAX_SIZE]; // Adjust the size as needed
-    xcolor color;
-} xlabel;
-
-typedef struct {
-    int32_t x;
-    int32_t y;
-    int32_t width;
-    int32_t height;
-    char text[XTEXT_MAX_SIZE]; // Adjust the size as needed
-    xcolor color;
-} xinput;
-
-typedef struct {
     int32_t width;
     int32_t height;
     char name[100];
