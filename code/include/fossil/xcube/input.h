@@ -20,13 +20,10 @@ extern "C"
 
 #include <xcube/basic.h> // all basic cube code
 
-// Function prototype for the callback function
-typedef void (*button_callback)(void);
-
-// Function prototypes for button-related functions
-xbutton fscl_button_create(int32_t x, int32_t y, int32_t width, int32_t height, const char* label, xcolor color, button_callback callback);
-void fscl_button_draw(xmanager* manager, xbutton button);
-void fscl_button_set_label(xbutton* button, const char* label);
+// Function prototypes for input-related functions
+xinput fscl_input_create(int32_t x, int32_t y, int32_t width, int32_t height, const char* text, xcolor color);
+void fscl_input_draw(xmanager* manager, xinput input);
+void fscl_input_set_text(xinput* input, const char* text);
 
 #ifdef __cplusplus
 }
