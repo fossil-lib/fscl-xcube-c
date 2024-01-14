@@ -24,6 +24,12 @@ extern "C"
 xlabel fscl_label_create(int32_t x, int32_t y, const char* text, xcolor color);
 void fscl_label_draw(xmanager* manager, xlabel label);
 void fscl_label_set_text(xlabel* label, const char* text);
+void fscl_label_set_position(xlabel* label, int32_t x, int32_t y);
+void fscl_label_set_text_color(xlabel* label, xcolor color);
+void fscl_label_set_font_size(xlabel* label, int font_size);
+void fscl_label_set_text_alignment(xlabel* label, int alignment);
+void fscl_label_set_visibility(xlabel* label, int visible);
+void fscl_label_rotate_text(xlabel* label, int degrees);
 
 #ifdef __cplusplus
 }
