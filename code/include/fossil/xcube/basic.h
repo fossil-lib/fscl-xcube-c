@@ -35,8 +35,9 @@ extern "C"
 
 enum {
     XTEXT_MAX_SIZE = 100,
-    XLABEL_MAX_SIZE = 50
-}
+    XLABEL_MAX_SIZE = 50,
+    XCUBE_LOOP = 1
+};
 
 typedef enum {
     XCOLOR_RED = 0xFF0000,
