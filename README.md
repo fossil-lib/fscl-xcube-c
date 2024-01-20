@@ -4,6 +4,34 @@ Fossil Standard Component Libraries (FSCL) by Fossil Logic represent the pinnacl
 
 Unleash your creativity in the visual realm with XCude 2D Graphics. This library is a powerhouse for 2D graphics, offering a versatile set of tools and functions to bring your visualizations to life. From rendering to animation, XCude 2D Graphics empowers developers to craft visually stunning and immersive user experiences.
 
+```c
+#include <fossil/xcube.h>
+
+int main() {
+    // Create a TUI with the application name
+    xui* ui = fscl_xcube_create("Hello World App");
+
+    // Add a "Hello, World!" element to the TUI
+    fscl_xcube_add_element(ui, 5, 5, 20, 3, "Hello, World!", XUI_COLOR_DEFAULT);
+
+    // Display the TUI
+    fscl_xcube_display(ui);
+
+    // Main event-handling loop
+    while (loop == XLOOP_ACTIVE) {
+        // Handle events (not implemented in this example)
+
+        // For simplicity, you can break the loop after handling one iteration
+        loop = XLOOP_INACTIVE;
+    }
+
+    // Clean up resources
+    fscl_xcube_exit(ui);
+
+    return 0;
+}
+```
+
 ## Who is This For?
 
 This guide is designed for developers of all skill levels who want to use the Meson build system for their projects. It assumes basic familiarity with command-line interfaces and project organization.
