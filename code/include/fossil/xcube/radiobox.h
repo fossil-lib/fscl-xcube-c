@@ -10,8 +10,8 @@ Description:
     feel free to contact Michael at michaelbrockus@gmail.com.
 ==============================================================================
 */
-#ifndef FSCL_BUTTON_H
-#define FSCL_BUTTON_H
+#ifndef FSCL_RADIOBOX_H
+#define FSCL_RADIOBOX_H
 
 #ifdef __cplusplus
 extern "C"
@@ -20,11 +20,14 @@ extern "C"
 
 #include <xcube/basic.h> // all basic cube code
 
-// Function to add a button to the TUI
-void fscl_xcube_add_button(xui* tui, int x, int y, int width, int height, const char* label, void (*callback)());
+// Function to create a radiobox and add it to the TUI
+void fscl_xcube_add_radiobox(xui* tui, int x, int y, const char* label, void (*callback)(int));
 
-// Function to handle button click events
-void fscl_xcube_button_click_handler(xui* tui, int mouse_x, int mouse_y);
+// Function to handle radiobox state changes
+void fscl_xcube_radiobox_state_change_handler(xui* tui, int mouse_x, int mouse_y);
+
+// Function to set the state of a radiobox
+void fscl_xcube_set_radiobox_state(xui* tui, int radiobox_index, int new_state);
 
 #ifdef __cplusplus
 }

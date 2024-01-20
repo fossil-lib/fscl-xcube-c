@@ -1,4 +1,7 @@
-code = files('basic.c')
+code = files(
+    'basic.c', 'button.c', 'checkbox.c',
+    'label.c', 'radiobox.c', 'textbox.c',
+    'event.c')
 
 lib = static_library('fscl-xcube-c',
     code,

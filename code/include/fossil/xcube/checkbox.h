@@ -10,8 +10,8 @@ Description:
     feel free to contact Michael at michaelbrockus@gmail.com.
 ==============================================================================
 */
-#ifndef FSCL_BUTTON_H
-#define FSCL_BUTTON_H
+#ifndef FSCL_CHECKBOX_H
+#define FSCL_CHECKBOX_H
 
 #ifdef __cplusplus
 extern "C"
@@ -20,11 +20,14 @@ extern "C"
 
 #include <xcube/basic.h> // all basic cube code
 
-// Function to add a button to the TUI
-void fscl_xcube_add_button(xui* tui, int x, int y, int width, int height, const char* label, void (*callback)());
+// Function to create a checkbox and add it to the TUI
+void fscl_xcube_add_checkbox(xui* tui, int x, int y, const char* label, void (*callback)(int));
 
-// Function to handle button click events
-void fscl_xcube_button_click_handler(xui* tui, int mouse_x, int mouse_y);
+// Function to handle checkbox state changes
+void fscl_xcube_checkbox_state_change_handler(xui* tui, int mouse_x, int mouse_y);
+
+// Function to set the state of a checkbox
+void fscl_xcube_set_checkbox_state(xui* tui, int checkbox_index, int new_state);
 
 #ifdef __cplusplus
 }

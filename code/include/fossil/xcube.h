@@ -19,9 +19,13 @@ extern "C"
 #endif
 
 #include <xcube/basic.h>
+#include <xcube/panel.h>
 #include <xcube/button.h>
 #include <xcube/label.h>
-#include <xcube/input.h>
+#include <xcube/event.h>
+#include <xcube/textbox.h>
+#include <xcube/radiobox.h>
+#include <xcube/checkbox.h>
 
 #ifdef __cplusplus
 }

@@ -20,89 +20,138 @@ extern "C"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include <string.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#endif
+// Custom implementation of strdup
+inline char* fscl_xcube_strdup(const char* str) {
+    size_t len = strlen(str) + 1;
+    char* new_str = (char *)malloc(len);
+    if (new_str != NULL) {
+        strcpy(new_str, str);
+    }
+    return new_str;
+}
 
-#ifdef __APPLE__
-#include <CoreGraphics/CoreGraphics.h>
-#endif
-
-enum {
-    XTEXT_MAX_SIZE = 100,
-    XLABEL_MAX_SIZE = 50,
-    XCUBE_LOOP = 1
-};
-
+// Enum representing the loop condition
 typedef enum {
-    XCOLOR_RED = 0xFF0000,
-    XCOLOR_GREEN = 0x00FF00,
-    XCOLOR_BLUE = 0x0000FF,
-    XCOLOR_YELLOW = 0xFFFF00,
-    XCOLOR_CYAN = 0x00FFFF,
-    XCOLOR_MAGENTA = 0xFF00FF,
-    XCOLOR_BLACK = 0x000000,
-    XCOLOR_WHITE = 0xFFFFFF,
-    XCOLOR_ORANGE = 0xFFA500,
-    XCOLOR_PURPLE = 0x800080,
-    XCOLOR_PINK = 0xFFC0CB,
-    XCOLOR_BROWN = 0xA52A2A,
-    XCOLOR_LIME = 0x00FF00,
-    XCOLOR_GRAY = 0x808080,
-    XCOLOR_GOLD = 0xFFD700,
-    XCOLOR_TEAL = 0x008080,
-    XCOLOR_SILVER = 0xC0C0C0,
-    XCOLOR_INDIGO = 0x4B0082,
-    XCOLOR_MAROON = 0x800000
-} xcolor;
+    XLOOP_ACTIVE = 1,
+    XLOOP_INACTIVE = 0
+} xloop;
 
+// Global loop variable
+xloop loop = XLOOP_ACTIVE;
+
+// Define color names
+typedef enum {
+    COLOR_DEFAULT,
+    COLOR_BLACK,
+    COLOR_RED,
+    COLOR_GREEN,
+    COLOR_YELLOW,
+    COLOR_BLUE,
+    COLOR_MAGENTA,
+    COLOR_CYAN,
+    COLOR_WHITE,
+    COLOR_GRAY,
+    COLOR_LIGHT_RED,
+    COLOR_LIGHT_GREEN,
+    COLOR_LIGHT_YELLOW,
+    COLOR_LIGHT_BLUE,
+    COLOR_LIGHT_MAGENTA,
+    COLOR_LIGHT_CYAN,
+    COLOR_BRIGHT_WHITE,
+    COLOR_ORANGE,
+    COLOR_PURPLE,
+    COLOR_BROWN,
+    COLOR_PINK,
+    COLOR_OLIVE,
+    COLOR_NAVY,
+    COLOR_TEAL,
+    COLOR_MAROON,
+    COLOR_SILVER,
+    COLOR_GOLD,
+    COLOR_INDIGO,
+    COLOR_DARK_GREEN,
+    COLOR_SKY_BLUE,
+    COLOR_PALE_GREEN,
+    COLOR_TOTAL // Total number of colors
+} xui_color;
+
+// Define xui_element structure to represent UI elements
 typedef struct {
-    int32_t x;
-    int32_t y;
-    int32_t width;
-    int32_t height;
-    xcolor color;
-} xpoint;
+    int x, y; // Position
+    int width, height; // Dimensions
+    char* content; // Content
+    xui_color color; // Color attribute
+} xui_element;
 
+// Define xui_button structure to represent buttons
 typedef struct {
-    int32_t width;
-    int32_t height;
-    char name[100];
-#ifdef _WIN32
-    HDC hdc;
-    HBITMAP hBitmap;
-    HWND hwnd;
-#elif __APPLE__
-    CGColorSpaceRef colorSpace;
-    CGContextRef context;
-    CGWindowID windowID;
-    NSWindow *nsWindow;
-#else
-    Display* display;
-    Window window;
-    GC gc;
-#endif
-} xwindow;
+    int x, y; // Position
+    int width, height; // Dimensions
+    char* label; // Button label
+    void (*callback)(); // Callback function when button is clicked
+} xui_button;
 
+// Define xui_label structure to represent labels
 typedef struct {
-    xwindow* windows;
-    int32_t num_windows;
-    int32_t active_window; // Index of the active window
-} manager;
+    int x, y; // Position
+    char* text; // Label text
+} xui_label;
 
-void fscl_window_create(xwindow* window, int32_t width, int32_t height, const char* name);
-void fscl_window_set_pixel(xwindow* window, xpoint point, xcolor color);
-void fscl_window_clear(xwindow* window);
-void fscl_window_erase(xwindow* window);
-void fscl_manager_create(xmanager* manager, int32_t num_windows, int32_t width, int32_t height);
-void fscl_manager_draw_active(xmanager* manager, xbutton button);
-void fscl_manager_switch_window(xmanager* manager, int32_t window_index);
-void fscl_manager_erase(xmanager* manager);
+// Define xui_textbox structure to represent textboxes
+typedef struct {
+    int x, y; // Position
+    int width, height; // Dimensions
+    char* text; // Text content
+} xui_textbox;
+
+// Define xui_checkbox structure to represent checkboxes
+typedef struct {
+    int x, y; // Position
+    char* label; // Checkbox label
+    int checked; // Checkbox state (0 for unchecked, 1 for checked)
+    void (*callback)(int); // Callback function when button is clicked
+} xui_checkbox;
+
+// Define xui_radiobox structure to represent radioboxes
+typedef struct {
+    int x, y; // Position
+    char* label; // Radiobox label
+    int selected; // Radiobox state (0 for unselected, 1 for selected)
+    void (*callback)(int); // Callback function when button is clicked
+} xui_radiobox;
+
+// Define xui structure to represent the TUI
+typedef struct {
+    char* app_name; // Application name
+    xui_element* elements; // Array of UI elements
+    xui_button* buttons; // Array of buttons
+    xui_label* labels; // Array of labels
+    xui_textbox* textboxes; // Array of textboxes
+    xui_checkbox* checkboxes; // Array of checkboxes
+    xui_radiobox* radioboxes; // Array of radioboxes
+    int num_elements; // Number of UI elements
+    int num_buttons; // Number of buttons
+    int num_labels; // Number of labels
+    int num_textboxes; // Number of textboxes
+    int num_checkboxes; // Number of checkboxes
+    int num_radioboxes; // Number of radioboxes
+} xui;
+
+// =================================================================
+// TUI API functions for the XCube library
+// =================================================================
+xui fscl_xcube_create(const char* app_name);
+void fscl_xcube_add_element(xui* tui, int x, int y, int width, int height, const char* content, xui_color color);
+void fscl_xcube_set_element_content(xui* tui, int element_index, const char* new_content);
+void fscl_xcube_move_element(xui* tui, int element_index, int new_x, int new_y);
+void fscl_xcube_resize_element(xui* tui, int element_index, int new_width, int new_height);
+void fscl_xcube_set_element_color(xui* tui, int element_index, xui_color new_color);
+void fscl_xcube_remove_element(xui* tui, int element_index);
+void fscl_xcube_display(xui* tui);
+void fscl_xcube_erase(xui* tui);
+void fscl_xcube_exit(xui* tui);
 
 #ifdef __cplusplus
 }

@@ -10,14 +10,24 @@ Description:
     feel free to contact Michael at michaelbrockus@gmail.com.
 ==============================================================================
 */
-#include "fossil/xcube/label.h"
+#ifndef FSCL_EVENT_H
+#define FSCL_EVENT_H
 
-// Function to add a label to the TUI
-void fscl_xcube_add_label(xui* tui, int x, int y, const char* text) {
-    tui->num_labels++;
-    tui->labels = realloc(tui->labels, tui->num_labels * sizeof(xui_label));
-    xui_label* label = &(tui->labels[tui->num_labels - 1]);
-    label->x = x;
-    label->y = y;
-    label->text = fscl_xcube_strdup(text);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#include <xcube/basic.h> // all basic cube code
+
+// Function to handle mouse events
+void fscl_xcube_handle_mouse_event(xui* tui, int mouse_x, int mouse_y);
+
+// Function to handle keyboard events
+void fscl_xcube_handle_keyboard_event(xui* tui, char key);
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif

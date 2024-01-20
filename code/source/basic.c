@@ -10,107 +10,173 @@ Description:
     feel free to contact Michael at michaelbrockus@gmail.com.
 ==============================================================================
 */
-#include "fossil/basic.h"
+#include "fossil/xcube/basic.h"
 
-void fscl_window_create(xwindow* window, int32_t width, int32_t height, const char* name) {
-#ifdef _WIN32
-    window->hdc = GetDC(GetConsoleWindow());
-    window->hBitmap = CreateCompatibleBitmap(window->hdc, width, height);
-    SelectObject(window->hdc, window->hBitmap);
-    window->hwnd = GetConsoleWindow();
-#elif __APPLE__
-    window->colorSpace = CGColorSpaceCreateDeviceRGB();
-    window->context = CGBitmapContextCreate(NULL, width, height, 8, 0, window->colorSpace,
-                                            kCGImageAlphaPremultipliedLast);
-    window->nsWindow = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, width, height)
-                                                   styleMask:(NSWindowStyleMaskTitled |
-                                                              NSWindowStyleMaskResizable |
-                                                              NSWindowStyleMaskClosable)
-                                                     backing:NSBackingStoreBuffered
-                                                       defer:NO];
-    [window->nsWindow setTitle:[NSString stringWithUTF8String:name]];
-    [window->nsWindow makeKeyAndOrderFront:nil];
-    window->windowID = [window->nsWindow windowNumber];
-#else
-    window->display = XOpenDisplay(NULL);
-    Window root = DefaultRootWindow(window->display);
-    window->window = XCreateSimpleWindow(window->display, root, 0, 0, width, height, 1, 0, 0);
-    XSelectInput(window->display, window->window, StructureNotifyMask | ExposureMask);
-    XMapWindow(window->display, window->window);
-    window->gc = XCreateGC(window->display, window->window, 0, NULL);
-    XStoreName(window->display, window->window, name);
-#endif
+// Function to initialize the TUI
+xui fscl_xcube_create(const char* app_name) {
+    xui tui;
+    tui.app_name = fscl_xcube_strdup(app_name);
+    tui.elements       = NULL;
+    tui.buttons        = NULL;
+    tui.labels         = NULL;
+    tui.textboxes      = NULL;
+    tui.checkboxes     = NULL;
+    tui.radioboxes     = NULL;
+    tui.num_elements   = 0;
+    tui.num_buttons    = 0;
+    tui.num_labels     = 0;
+    tui.num_textboxes  = 0;
+    tui.num_checkboxes = 0;
+    tui.num_radioboxes = 0;
+    return tui;
 }
 
-void fscl_window_set_pixel(xwindow* window, xpoint point, xcolor color) {
-#ifdef _WIN32
-    SetPixel(window->hdc, point.x, point.y, color);
-#elif __APPLE__
-    CGContextSetRGBFillColor(window->context, ((color >> 16) & 0xFF) / 255.0,
-                             ((color >> 8) & 0xFF) / 255.0, (color & 0xFF) / 255.0, 1.0);
-    CGContextFillRect(window->context, CGRectMake(point.x, point.y, 1, 1));
-    CGImageRef image = CGBitmapContextCreateImage(window->context);
-    CGWindowID windowID = window->windowID;
-    CGWindowLevel windowLevel = kCGNormalWindowLevel;
-    CGContextRef mainContext = [[NSGraphicsContext currentContext] graphicsPort];
-    CGContextDrawImage(mainContext, CGRectMake(0, 0, window->width, window->height), image);
-    CGImageRelease(image);
-#else
-    XSetForeground(window->display, window->gc, color);
-    XDrawPoint(window->display, window->window, window->gc, point.x, point.y);
-    XFlush(window->display);
-#endif
+// Function to add an element to the TUI
+void fscl_xcube_add_element(xui* tui, int x, int y, int width, int height, const char* content, xui_color color) {
+    tui->num_elements++;
+    tui->elements = realloc(tui->elements, tui->num_elements * sizeof(xui_element));
+    xui_element* elem = &(tui->elements[tui->num_elements - 1]);
+    elem->x = x;
+    elem->y = y;
+    elem->width = width;
+    elem->height = height;
+    elem->content = fscl_xcube_strdup(content);
+    elem->color = color;
 }
 
-void fscl_window_clear(xwindow* window) {
-#ifdef _WIN32
-    BitBlt(window->hdc, 0, 0, window->width, window->height, NULL, 0, 0, WHITENESS);
-#elif __APPLE__
-    CGContextClearRect(window->context, CGRectMake(0, 0, window->width, window->height));
-#else
-    XClearWindow(window->display, window->window);
-#endif
-}
-
-void fscl_window_erase(xwindow* window) {
-#ifdef _WIN32
-    DeleteObject(window->hBitmap);
-    ReleaseDC(window->hwnd, window->hdc);
-#elif __APPLE__
-    CGContextRelease(window->context);
-#else
-    XFreeGC(window->display, window->gc);
-    XDestroyWindow(window->display, window->window);
-    XCloseDisplay(window->display);
-#endif
-}
-
-void fscl_manager_create(xmanager* manager, int32_t num_windows, int32_t width, int32_t height) {
-    manager->num_windows = num_windows;
-    manager->windows = (xwindow*)malloc(num_windows * sizeof(xwindow));
-    manager->active_window = 0;
-
-    for (int32_t i = 0; i < num_windows; ++i) {
-        char window_name[100];
-        sprintf(window_name, "Window %d", i + 1);
-        fscl_window_create(&manager->windows[i], width, height, window_name);
+// Function to change the content of an element
+void fscl_xcube_set_element_content(xui* tui, int element_index, const char* new_content) {
+    if (element_index >= 0 && element_index < tui->num_elements) {
+        free(tui->elements[element_index].content);
+        tui->elements[element_index].content = fscl_xcube_strdup(new_content);
     }
 }
 
-void fscl_manager_draw_active(xmanager* manager, xbutton button) {
-    fscl_window_clear(&manager->windows[manager->active_window]);
-    fscl_window_set_pixel(&manager->windows[manager->active_window], (xpoint){button.x, button.y}, button.color);
-}
-
-void fscl_manager_switch_window(xmanager* manager, int32_t window_index) {
-    if (window_index >= 0 && window_index < manager->num_windows) {
-        manager->active_window = window_index;
+// Function to move an element to a new position
+void fscl_xcube_move_element(xui* tui, int element_index, int new_x, int new_y) {
+    if (element_index >= 0 && element_index < tui->num_elements) {
+        tui->elements[element_index].x = new_x;
+        tui->elements[element_index].y = new_y;
     }
 }
 
-void fscl_manager_erase(xmanager* manager) {
-    for (int32_t i = 0; i < manager->num_windows; ++i) {
-        fscl_window_erase(&manager->windows[i]);
+// Function to resize an element
+void fscl_xcube_resize_element(xui* tui, int element_index, int new_width, int new_height) {
+    if (element_index >= 0 && element_index < tui->num_elements) {
+        tui->elements[element_index].width = new_width;
+        tui->elements[element_index].height = new_height;
     }
-    free(manager->windows);
+}
+
+// Function to change the color of an element
+void fscl_xcube_set_element_color(xui* tui, int element_index, xui_color new_color) {
+    if (element_index >= 0 && element_index < tui->num_elements) {
+        tui->elements[element_index].color = new_color;
+    }
+}
+
+// Function to remove an element
+void fscl_xcube_remove_element(xui* tui, int element_index) {
+    if (element_index >= 0 && element_index < tui->num_elements) {
+        free(tui->elements[element_index].content);
+        // Move the last element to the removed element's position
+        tui->elements[element_index] = tui->elements[tui->num_elements - 1];
+        // Decrease the number of elements
+        tui->num_elements--;
+        // Reallocate memory for elements
+        tui->elements = realloc(tui->elements, tui->num_elements * sizeof(xui_element));
+    }
+}
+
+// Function to display the TUI
+void fscl_xcube_display(xui* tui) {
+    // Display application name
+    printf("%s\n", tui->app_name);
+
+    // Display each element
+    for (int i = 0; i < tui->num_elements; i++) {
+        xui_element* elem = &(tui->elements[i]);
+        // Set color based on the color attribute
+        if (elem->color >= 0 && elem->color < COLOR_TOTAL) {
+            printf("\033[38;5;%dm", elem->color); // Set color
+        }
+        // Position cursor and print content
+        printf("\033[%d;%dH%s", elem->y, elem->x, elem->content);
+        // Reset color
+        printf("\033[0m");
+    }
+
+    // Display each button
+    for (int i = 0; i < tui->num_buttons; i++) {
+        xui_button* button = &(tui->buttons[i]);
+        printf("\033[%d;%dH[%s]", button->y, button->x, button->label);
+    }
+
+    // Display each label
+    for (int i = 0; i < tui->num_labels; i++) {
+        xui_label* label = &(tui->labels[i]);
+        printf("\033[%d;%dH%s", label->y, label->x, label->text);
+    }
+
+    // Display each textbox
+    for (int i = 0; i < tui->num_textboxes; i++) {
+        xui_textbox* textbox = &(tui->textboxes[i]);
+        printf("\033[%d;%dH%s", textbox->y, textbox->x, textbox->text);
+    }
+
+    // Display each checkbox
+    for (int i = 0; i < tui->num_checkboxes; i++) {
+        xui_checkbox* checkbox = &(tui->checkboxes[i]);
+        printf("\033[%d;%dH[%c] %s", checkbox->y, checkbox->x, checkbox->checked ? 'X' : ' ', checkbox->label);
+    }
+
+    // Display each radiobox
+    for (int i = 0; i < tui->num_radioboxes; i++) {
+        xui_radiobox* radiobox = &(tui->radioboxes[i]);
+        printf("\033[%d;%dH(%c) %s", radiobox->y, radiobox->x, radiobox->selected ? 'O' : ' ', radiobox->label);
+    }
+
+    fflush(stdout);
+}
+
+// Function to erase the TUI
+void fscl_xcube_erase(xui* tui) {
+    // Clear the screen
+    printf("\033[2J");
+    fflush(stdout);
+}
+
+// Function to clean up and exit
+void fscl_xcube_exit(xui* tui) {
+    free(tui->app_name); // Free application name memory
+
+    for (int i = 0; i < tui->num_elements; i++) {
+        free(tui->elements[i].content);
+    }
+    free(tui->elements); // Free UI elements memory
+
+    for (int i = 0; i < tui->num_buttons; i++) {
+        free(tui->buttons[i].label);
+    }
+    free(tui->buttons); // Free buttons memory
+
+    for (int i = 0; i < tui->num_labels; i++) {
+        free(tui->labels[i].text);
+    }
+    free(tui->labels); // Free labels memory
+
+    for (int i = 0; i < tui->num_textboxes; i++) {
+        free(tui->textboxes[i].text);
+    }
+    free(tui->textboxes); // Free textboxes memory
+
+    for (int i = 0; i < tui->num_checkboxes; i++) {
+        free(tui->checkboxes[i].label);
+    }
+    free(tui->checkboxes); // Free checkboxes memory
+
+    for (int i = 0; i < tui->num_radioboxes; i++) {
+        free(tui->radioboxes[i].label);
+    }
+    free(tui->radioboxes); // Free radioboxes memory
 }
