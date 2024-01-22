@@ -142,7 +142,7 @@ typedef struct {
 // =================================================================
 // TUI API functions for the XCube library
 // =================================================================
-xui fscl_xcube_create(const char* app_name);
+xui* fscl_xcube_create(const char* app_name);
 void fscl_xcube_add_element(xui* tui, int x, int y, int width, int height, const char* content, xui_color color);
 void fscl_xcube_set_element_content(xui* tui, int element_index, const char* new_content);
 void fscl_xcube_move_element(xui* tui, int element_index, int new_x, int new_y);
