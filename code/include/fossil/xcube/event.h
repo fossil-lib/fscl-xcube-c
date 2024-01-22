@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include <basic.h> // all basic cube code
+#include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to handle mouse events
 void fscl_xcube_handle_mouse_event(xui* tui, int mouse_x, int mouse_y);

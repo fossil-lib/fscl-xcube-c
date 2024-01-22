@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include <basic.h> // all basic cube code
+#include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to add a label to the TUI
 void fscl_xcube_add_label(xui* tui, int x, int y, const char* text);
