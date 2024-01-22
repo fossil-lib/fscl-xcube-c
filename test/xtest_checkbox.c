@@ -15,7 +15,7 @@ Description:
 
 #include <fossil/xcube/checkbox.h> // library under test
 
-void my_on_check_callback(void) {
+void my_on_check_callback(int arg) {
     // empty
 }
 

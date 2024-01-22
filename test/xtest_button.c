@@ -41,7 +41,6 @@ XTEST_CASE(test_button_click) {
     xui* testTui = fscl_xcube_create("TestApp");
 
     // Add a button to the TUI
-    int clickCount = 0;
     fscl_xcube_add_button(testTui, 5, 5, 10, 3, "Click Me", my_on_click_callback);
 
     // Simulate a button click
