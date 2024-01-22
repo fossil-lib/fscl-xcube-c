@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include <xcube/basic.h> // all basic cube code
+#include <basic.h> // all basic cube code
 
 // Function to create a textbox and add it to the TUI
 void fscl_xcube_add_textbox(xui* tui, int x, int y, int width, int height, const char* text);

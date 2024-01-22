@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include <xcube/basic.h> // all basic cube code
+#include <basic.h> // all basic cube code
 
 // Enum representing the type of window
 typedef enum {

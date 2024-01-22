@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include <xcube/basic.h> // all basic cube code
+#include <basic.h> // all basic cube code
 
 // Function to create a checkbox and add it to the TUI
 void fscl_xcube_add_checkbox(xui* tui, int x, int y, const char* label, void (*callback)(int));

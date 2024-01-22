@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include <xcube/basic.h> // all basic cube code
+#include <basic.h> // all basic cube code
 
 // Function to add a button to the TUI
 void fscl_xcube_add_button(xui* tui, int x, int y, int width, int height, const char* label, void (*callback)());
