@@ -29,7 +29,6 @@ XTEST_CASE(test_add_radiobox) {
 
     // Add a radio box to the TUI
     int selectedOption = 0;
-    const char options[] = { "Option 1", "Option 2", "Option 3" };
     fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
 
     // Add assertions to check if the radio box is added successfully
