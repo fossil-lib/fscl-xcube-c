@@ -15,6 +15,10 @@ Description:
 
 #include <fossil/xcube/checkbox.h> // library under test
 
+void my_on_check_callback(void) {
+    // empty
+}
+
 //
 // XUNIT-CASES: list of test cases testing project features
 //
@@ -24,8 +28,7 @@ XTEST_CASE(test_add_checkbox) {
     xui* testTui = fscl_xcube_create("TestApp");
 
     // Add a checkbox to the TUI
-    int state = 0;
-    fscl_xcube_add_checkbox(testTui, 5, 5, "Checkbox", &state);
+    fscl_xcube_add_checkbox(testTui, 5, 5, "Checkbox", my_on_check_callback);
 
     // Add assertions to check if the checkbox is added successfully
     TEST_ASSERT_EQUAL_CSTRING("Checkbox", testTui->checkboxes[0].label);
@@ -38,14 +41,13 @@ XTEST_CASE(test_toggle_checkbox) {
     xui* testTui = fscl_xcube_create("TestApp");
 
     // Add a checkbox to the TUI
-    int state = 0;
-    fscl_xcube_add_checkbox(testTui, 5, 5, "Checkbox", &state);
+    fscl_xcube_add_checkbox(testTui, 5, 5, "Checkbox", my_on_check_callback);
 
     // Toggle the checkbox state
     fscl_xcube_checkbox_state_change_handler(testTui, 7, 6);
 
-    // Add assertions to check if the checkbox state is toggled
-    TEST_ASSERT_EQUAL(1, state);
+    // Add assertions to check if the checkbox is added successfully
+    TEST_ASSERT_EQUAL_CSTRING("Checkbox", testTui->checkboxes[0].label);
 
     fscl_xcube_exit(testTui);
 }

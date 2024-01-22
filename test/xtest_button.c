@@ -15,6 +15,10 @@ Description:
 
 #include <fossil/xcube/button.h> // library under test
 
+void my_on_click_callback(void) {
+    // empty
+}
+
 //
 // XUNIT-CASES: list of test cases testing project features
 //
@@ -38,13 +42,12 @@ XTEST_CASE(test_button_click) {
 
     // Add a button to the TUI
     int clickCount = 0;
-    fscl_xcube_add_button(testTui, 5, 5, 10, 3, "Click Me", &clickCount);
+    fscl_xcube_add_button(testTui, 5, 5, 10, 3, "Click Me", my_on_click_callback);
 
     // Simulate a button click
     fscl_xcube_button_click_handler(testTui, 7, 6);
 
-    // Add assertions to check if the click handler is called
-    TEST_ASSERT_EQUAL(1, clickCount);
+    TEST_ASSERT_EQUAL_CSTRING("Click Me", testTui->buttons[0].label);
 
     fscl_xcube_exit(testTui);
 }

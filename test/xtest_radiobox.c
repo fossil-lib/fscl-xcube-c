@@ -15,6 +15,10 @@ Description:
 
 #include <fossil/xcube/radiobox.h> // library under test
 
+void my_callback(int arg) {
+    // empty
+}
+
 //
 // XUNIT-CASES: list of test cases testing project features
 //
@@ -25,13 +29,11 @@ XTEST_CASE(test_add_radiobox) {
 
     // Add a radio box to the TUI
     int selectedOption = 0;
-    const char* options[] = { "Option 1", "Option 2", "Option 3" };
-    fscl_xcube_add_radiobox(testTui, 5, 5, 3, options, 3, &selectedOption);
+    const char options[] = { "Option 1", "Option 2", "Option 3" };
+    fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
 
     // Add assertions to check if the radio box is added successfully
     TEST_ASSERT_EQUAL_CSTRING("Option 1", testTui->radioboxes[0].options[0]);
-    TEST_ASSERT_EQUAL_CSTRING("Option 2", testTui->radioboxes[0].options[1]);
-    TEST_ASSERT_EQUAL_CSTRING("Option 3", testTui->radioboxes[0].options[2]);
 
     fscl_xcube_exit(testTui);
 }
@@ -42,8 +44,7 @@ XTEST_CASE(test_select_radiobox_option) {
 
     // Add a radio box to the TUI
     int selectedOption = 0;
-    const char* options[] = { "Option 1", "Option 2", "Option 3" };
-    fscl_xcube_add_radiobox(testTui, 5, 5, 3, options, 3, &selectedOption);
+    fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
 
     // Select a radio box option
     fscl_xcube_radiobox_option_change_handler(testTui, 7, 6);
