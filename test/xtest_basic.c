@@ -29,7 +29,7 @@ XTEST_CASE(test_create_tui) {
 // Test for adding an element to the TUI
 XTEST_CASE(test_add_element) {
     xui* testTui = fscl_xcube_create("TestApp");
-    fscl_xcube_add_element(testTui, 5, 5, 20, 3, "Test Element", XUI_COLOR_DEFAULT);
+    fscl_xcube_add_element(testTui, 5, 5, 20, 3, "Test Element", COLOR_BLUE);
     TEST_ASSERT_EQUAL_CSTRING("Test Element", testTui->elements[0].content);
     fscl_xcube_exit(testTui);
 }

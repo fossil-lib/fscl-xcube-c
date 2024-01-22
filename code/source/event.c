@@ -11,6 +11,9 @@ Description:
 ==============================================================================
 */
 #include "fossil/xcube/event.h"
+#include "fossil/xcube/checkbox.h"
+#include "fossil/xcube/button.h"
+#include "fossil/xcube/radiobox.h"
 
 // Function to handle mouse events
 void fscl_xcube_handle_mouse_event(xui* tui, int mouse_x, int mouse_y) {

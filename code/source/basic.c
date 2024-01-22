@@ -13,21 +13,25 @@ Description:
 #include "fossil/xcube/basic.h"
 
 // Function to initialize the TUI
-xui fscl_xcube_create(const char* app_name) {
-    xui tui;
-    tui.app_name = fscl_xcube_strdup(app_name);
-    tui.elements       = NULL;
-    tui.buttons        = NULL;
-    tui.labels         = NULL;
-    tui.textboxes      = NULL;
-    tui.checkboxes     = NULL;
-    tui.radioboxes     = NULL;
-    tui.num_elements   = 0;
-    tui.num_buttons    = 0;
-    tui.num_labels     = 0;
-    tui.num_textboxes  = 0;
-    tui.num_checkboxes = 0;
-    tui.num_radioboxes = 0;
+xui* fscl_xcube_create(const char* app_name) {
+    xui* tui = (xui*)malloc(sizeof(xui));
+
+    if (tui != NULL) {
+        tui->app_name = fscl_xcube_strdup(app_name);
+        tui->elements = NULL;
+        tui->buttons = NULL;
+        tui->labels = NULL;
+        tui->textboxes = NULL;
+        tui->checkboxes = NULL;
+        tui->radioboxes = NULL;
+        tui->num_elements = 0;
+        tui->num_buttons = 0;
+        tui->num_labels = 0;
+        tui->num_textboxes = 0;
+        tui->num_checkboxes = 0;
+        tui->num_radioboxes = 0;
+    }
+
     return tui;
 }
 
@@ -179,4 +183,5 @@ void fscl_xcube_exit(xui* tui) {
         free(tui->radioboxes[i].label);
     }
     free(tui->radioboxes); // Free radioboxes memory
+    free(tui);
 }
