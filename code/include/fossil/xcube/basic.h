@@ -22,16 +22,6 @@ extern "C"
 #include <stdlib.h>
 #include <string.h>
 
-// Custom implementation of strdup
-inline char* fscl_xcube_strdup(const char* str) {
-    size_t len = strlen(str) + 1;
-    char* new_str = (char *)malloc(len);
-    if (new_str != NULL) {
-        strcpy(new_str, str);
-    }
-    return new_str;
-}
-
 // Enum representing the loop condition
 typedef enum {
     XLOOP_ACTIVE = 1,
@@ -39,7 +29,7 @@ typedef enum {
 } xloop;
 
 // Global loop variable
-xloop loop = XLOOP_ACTIVE;
+extern xloop loop;
 
 // Define color names
 typedef enum {

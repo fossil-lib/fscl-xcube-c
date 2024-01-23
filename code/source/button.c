@@ -12,6 +12,8 @@ Description:
 */
 #include "fossil/xcube/button.h"
 
+extern char* fscl_xcube_strdup(const char* str);
+
 // Function to create a button and add it to the TUI
 void fscl_xcube_add_button(xui* tui, int x, int y, int width, int height, const char* label, void (*callback)()) {
     tui->num_buttons++;

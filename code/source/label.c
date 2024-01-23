@@ -12,6 +12,8 @@ Description:
 */
 #include "fossil/xcube/label.h"
 
+extern char* fscl_xcube_strdup(const char* str);
+
 // Function to add a label to the TUI
 void fscl_xcube_add_label(xui* tui, int x, int y, const char* text) {
     tui->num_labels++;

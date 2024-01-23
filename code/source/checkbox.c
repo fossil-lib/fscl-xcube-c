@@ -12,6 +12,8 @@ Description:
 */
 #include "fossil/xcube/checkbox.h"
 
+extern char* fscl_xcube_strdup(const char* str);
+
 // Function to create a checkbox and add it to the TUI
 void fscl_xcube_add_checkbox(xui* tui, int x, int y, const char* label, void (*callback)(int)) {
     tui->num_checkboxes++;

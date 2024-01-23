@@ -12,6 +12,8 @@ Description:
 */
 #include "fossil/xcube/panel.h"
 
+extern char* fscl_xcube_strdup(const char* str);
+
 // Function to create a new panel of a specific type
 xpanel* fscl_xcube_create_panel(xpanel_type type) {
     xpanel* panel = malloc(sizeof(xpanel));

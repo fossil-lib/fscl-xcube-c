@@ -12,6 +12,19 @@ Description:
 */
 #include "fossil/xcube/basic.h"
 
+// Global loop variable
+xloop loop = XLOOP_ACTIVE;
+
+// Custom implementation of strdup
+char* fscl_xcube_strdup(const char* str) {
+    size_t len = strlen(str) + 1;
+    char* new_str = (char *)malloc(len);
+    if (new_str != NULL) {
+        strcpy(new_str, str);
+    }
+    return new_str;
+}
+
 // Function to initialize the TUI
 xui* fscl_xcube_create(const char* app_name) {
     xui* tui = (xui*)malloc(sizeof(xui));
