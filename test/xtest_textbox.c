@@ -28,7 +28,7 @@ XTEST_CASE(test_add_textbox) {
     fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer, sizeof(textBuffer));
 
     // Add assertions to check if the textbox is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("", testTui->textboxes[0].textBuffer);
+    TEST_ASSERT_EQUAL_CSTRING("", testTui->textboxes[0].text);
 
     fscl_xcube_exit(testTui);
 }
@@ -45,7 +45,7 @@ XTEST_CASE(test_update_textbox) {
     fscl_xcube_set_textbox_content(testTui, 0, "Updated Text");
 
     // Add assertions to check if the textbox content is updated
-    TEST_ASSERT_EQUAL_CSTRING("Updated Text", testTui->textboxes[0].textBuffer);
+    TEST_ASSERT_EQUAL_CSTRING("Updated Text", testTui->textboxes[0].text);
 
     fscl_xcube_exit(testTui);
 }
