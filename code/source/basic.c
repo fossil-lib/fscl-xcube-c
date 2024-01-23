@@ -13,15 +13,26 @@ Description:
 #include "fossil/xcube/basic.h"
 
 #ifdef _WIN32
-    #include <stdlib.h>
-    #define CLEAR_SCREEN "cls"
+#include <windows.h>
+#include <conio.h>
 #else
-    #include <unistd.h>
-    #define CLEAR_SCREEN "clear"
+#define _GNU_SOURCE // for getline function
+#include <termios.h>
+#include <unistd.h>
 #endif
 
 // Global loop variable
 xloop loop = XLOOP_ACTIVE;
+
+// Clear Screen Function
+void fscl_xcube_console_clear() {
+#ifdef _WIN32
+    int dummy = system("cls");
+#else
+    int dummy = system("clear");
+#endif
+    (void)dummy;  // Avoid unused variable warning
+}
 
 // Custom implementation of strdup
 char* fscl_xcube_strdup(const char* str) {
@@ -51,7 +62,7 @@ xui* fscl_xcube_create(const char* app_name) {
         tui->num_textboxes = 0;
         tui->num_checkboxes = 0;
         tui->num_radioboxes = 0;
-        (void)system(CLEAR_SCREEN);
+        fscl_xcube_console_clear();
     }
 
     return tui;
@@ -206,5 +217,5 @@ void fscl_xcube_exit(xui* tui) {
     }
     free(tui->radioboxes); // Free radioboxes memory
     free(tui);
-    (void)system(CLEAR_SCREEN);
+    fscl_xcube_console_clear();
 }
