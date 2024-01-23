@@ -31,6 +31,7 @@ void fscl_xcube_handle_mouse_event(xui* tui, int mouse_x, int mouse_y) {
 void fscl_xcube_handle_keyboard_event(xui* tui, char key) {
     // Check if a specific textbox has focus (you might need a way to track the focused textbox)
     int focused_textbox_index = 0; // Assuming the first textbox has focus
+    int new_length;
 
     if (focused_textbox_index >= 0 && focused_textbox_index < tui->num_textboxes) {
         xui_textbox* focused_textbox = &(tui->textboxes[focused_textbox_index]);
@@ -50,7 +51,7 @@ void fscl_xcube_handle_keyboard_event(xui* tui, char key) {
 
             default:
                 // Append the pressed key to the textbox text
-                int new_length = strlen(focused_textbox->text) + 2; // +2 for the new character and null terminator
+                new_length = strlen(focused_textbox->text) + 2; // +2 for the new character and null terminator
                 focused_textbox->text = realloc(focused_textbox->text, new_length);
                 focused_textbox->text[new_length - 2] = key;
                 focused_textbox->text[new_length - 1] = '\0';
