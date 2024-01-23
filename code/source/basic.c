@@ -51,7 +51,7 @@ xui* fscl_xcube_create(const char* app_name) {
         tui->num_textboxes = 0;
         tui->num_checkboxes = 0;
         tui->num_radioboxes = 0;
-        system(CLEAR_SCREEN);
+        (void)system(CLEAR_SCREEN);
     }
 
     return tui;
@@ -170,7 +170,6 @@ void fscl_xcube_erase(xui* tui) {
     // Clear the screen
     printf("\033[2J");
     fflush(stdout);
-    system(CLEAR_SCREEN);
 }
 
 // Function to clean up and exit
@@ -207,4 +206,5 @@ void fscl_xcube_exit(xui* tui) {
     }
     free(tui->radioboxes); // Free radioboxes memory
     free(tui);
+    (void)system(CLEAR_SCREEN);
 }
