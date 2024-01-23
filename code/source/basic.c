@@ -12,6 +12,14 @@ Description:
 */
 #include "fossil/xcube/basic.h"
 
+#ifdef _WIN32
+    #include <stdlib.h>
+    #define CLEAR_SCREEN "cls"
+#else
+    #include <unistd.h>
+    #define CLEAR_SCREEN "clear"
+#endif
+
 // Global loop variable
 xloop loop = XLOOP_ACTIVE;
 
@@ -43,6 +51,7 @@ xui* fscl_xcube_create(const char* app_name) {
         tui->num_textboxes = 0;
         tui->num_checkboxes = 0;
         tui->num_radioboxes = 0;
+        system(CLEAR_SCREEN);
     }
 
     return tui;
@@ -161,6 +170,7 @@ void fscl_xcube_erase(xui* tui) {
     // Clear the screen
     printf("\033[2J");
     fflush(stdout);
+    system(CLEAR_SCREEN);
 }
 
 // Function to clean up and exit
