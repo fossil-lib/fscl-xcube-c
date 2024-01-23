@@ -24,7 +24,7 @@ extern "C"
 void fscl_xcube_add_textbox(xui* tui, int x, int y, int width, int height, const char* text);
 
 // Function to set the text content of a textbox
-void fscl_xcube_set_textbox_text(xui* tui, int textbox_index, const char* new_text);
+void fscl_xcube_set_textbox_content(xui* tui, int textbox_index, const char* new_text);
 
 #ifdef __cplusplus
 }

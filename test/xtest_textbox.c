@@ -25,7 +25,7 @@ XTEST_CASE(test_add_textbox) {
 
     // Add a textbox to the TUI
     char textBuffer[100]; // Adjust the size based on your needs
-    fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer, sizeof(textBuffer));
+    fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer);
 
     // Add assertions to check if the textbox is added successfully
     TEST_ASSERT_EQUAL_CSTRING("", testTui->textboxes[0].text);
@@ -39,7 +39,7 @@ XTEST_CASE(test_update_textbox) {
 
     // Add a textbox to the TUI
     char textBuffer[100]; // Adjust the size based on your needs
-    fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer, sizeof(textBuffer));
+    fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer);
 
     // Update the textbox content
     fscl_xcube_set_textbox_content(testTui, 0, "Updated Text");

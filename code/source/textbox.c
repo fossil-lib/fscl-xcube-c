@@ -25,7 +25,7 @@ void fscl_xcube_add_textbox(xui* tui, int x, int y, int width, int height, const
 }
 
 // Function to set the text content of a textbox
-void fscl_xcube_set_textbox_text(xui* tui, int textbox_index, const char* new_text) {
+void fscl_xcube_set_textbox_content(xui* tui, int textbox_index, const char* new_text) {
     if (textbox_index >= 0 && textbox_index < tui->num_textboxes) {
         free(tui->textboxes[textbox_index].text);
         tui->textboxes[textbox_index].text = fscl_xcube_strdup(new_text);
