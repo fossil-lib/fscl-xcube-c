@@ -21,3 +21,13 @@ void fscl_xcube_add_label(xui* tui, int x, int y, const char* text) {
     label->y = y;
     label->text = fscl_xcube_strdup(text);
 }
+
+void fscl_xcube_set_label_content(xui* tui, int label_index, const char* new_content) {
+    if (tui == NULL || label_index < 0 || label_index >= tui->num_labels) {
+        // Handle invalid input or index out of bounds
+        return;
+    }
+
+    // Update the content of the specified label using strcpy
+    strcpy(tui->labels[label_index].text, new_content);
+}

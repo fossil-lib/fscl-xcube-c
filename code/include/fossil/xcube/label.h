@@ -23,6 +23,9 @@ extern "C"
 // Function to add a label to the TUI
 void fscl_xcube_add_label(xui* tui, int x, int y, const char* text);
 
+// Function updates the content of the specified label.
+void fscl_xcube_set_label_content(xui* tui, int label_index, const char* new_content);
+
 #ifdef __cplusplus
 }
 #endif
