@@ -45,7 +45,7 @@ XTEST_CASE(test_select_radiobox_option) {
     fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
 
     // Select a radio box option
-    fscl_xcube_radiobox_option_change_handler(testTui, 7, 6);
+    fscl_xcube_radiobox_state_change_handler(testTui, 7, 6);
 
     // Add assertions to check if the selected option is updated
     TEST_ASSERT_EQUAL(1, selectedOption);
