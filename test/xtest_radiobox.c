@@ -28,7 +28,6 @@ XTEST_CASE(test_add_radiobox) {
     xui* testTui = fscl_xcube_create("TestApp");
 
     // Add a radio box to the TUI
-    int selectedOption = 0;
     fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
 
     // Add assertions to check if the radio box is added successfully
