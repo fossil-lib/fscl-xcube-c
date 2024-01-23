@@ -19,7 +19,6 @@ extern "C"
 #endif
 
 #include <xcube/basic.h>
-#include <xcube/panel.h>
 #include <xcube/button.h>
 #include <xcube/label.h>
 #include <xcube/event.h>

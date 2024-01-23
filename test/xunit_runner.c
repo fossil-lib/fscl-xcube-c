@@ -19,7 +19,6 @@ XTEST_EXTERN_POOL(xui_basic_group);
 XTEST_EXTERN_POOL(xui_button_group);
 XTEST_EXTERN_POOL(xui_checkbox_group);
 XTEST_EXTERN_POOL(xui_label_group);
-XTEST_EXTERN_POOL(xui_panel_group);
 XTEST_EXTERN_POOL(xui_radiobox_group);
 XTEST_EXTERN_POOL(xui_textbox_group);
 
@@ -33,7 +32,6 @@ int main(int argc, char **argv) {
     XTEST_IMPORT_POOL(xui_button_group);
     XTEST_IMPORT_POOL(xui_checkbox_group);
     XTEST_IMPORT_POOL(xui_label_group);
-    XTEST_IMPORT_POOL(xui_panel_group);
     XTEST_IMPORT_POOL(xui_radiobox_group);
     XTEST_IMPORT_POOL(xui_textbox_group);
 
