@@ -127,6 +127,7 @@ typedef struct {
     int num_textboxes; // Number of textboxes
     int num_checkboxes; // Number of checkboxes
     int num_radioboxes; // Number of radioboxes
+    int visable; // Visible state of the element
 } xui;
 
 // =================================================================

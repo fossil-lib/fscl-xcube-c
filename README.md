@@ -12,7 +12,7 @@ int main() {
     xui* ui = fscl_xcube_create("Hello World App");
 
     // Add a "Hello, World!" element to the TUI
-    fscl_xcube_add_element(ui, 5, 5, 20, 3, "Hello, World!", XUI_COLOR_DEFAULT);
+    fscl_xcube_add_element(ui, 5, 5, 20, 3, "Hello, World!", COLOR_BLUE);
 
     // Display the TUI
     fscl_xcube_display(ui);

@@ -14,6 +14,53 @@ Description:
 
 extern char* fscl_xcube_strdup(const char* str);
 
+// xcube.c
+
+#include "xcube.h"
+#include <stdlib.h>
+
+// Implementation of xui structure and other functions...
+
+static xui* fscl_xcube_create_tui(const char* app_name) {
+    return fscl_xcube_create(app_name);
+}
+
+xui* fscl_xcube_create_tui(const char* app_name) {
+    xui* tui = (xui*)malloc(sizeof(xui));
+
+    if (tui != NULL) {
+        tui->app_name = fscl_xcube_strdup(app_name);
+        tui->elements = NULL;
+        tui->buttons = NULL;
+        tui->labels = NULL;
+        tui->textboxes = NULL;
+        tui->checkboxes = NULL;
+        tui->radioboxes = NULL;
+        tui->num_elements = 0;
+        tui->num_buttons = 0;
+        tui->num_labels = 0;
+        tui->num_textboxes = 0;
+        tui->num_checkboxes = 0;
+        tui->num_radioboxes = 0;
+        tui->visible = 1;  // Set the TUI as visible by default
+    }
+
+    return tui;
+}
+
+static void fscl_xcube_hide_tui(xui* tui) {
+    if (tui != NULL) {
+        tui->visible = 0;
+    }
+}
+
+static void fscl_xcube_show_tui(xui* tui) {
+    if (tui != NULL) {
+        tui->visible = 1;
+    }
+}
+
+
 // Function to create a new panel of a specific type
 xpanel* fscl_xcube_create_panel(xpanel_type type) {
     xpanel* panel = malloc(sizeof(xpanel));
@@ -24,12 +71,12 @@ xpanel* fscl_xcube_create_panel(xpanel_type type) {
     switch (type) {
         case XPANEL_TYPE_CLASSIC:
             // Add elements or customize as needed for the classic panel
-            fscl_xcube_add_element(panel->tui, "Classic Panel", 5, 5, 20, 3);
+            fscl_xcube_add_element(panel->tui, 5, 5, 20, 3, "Classic Panel", COLOR_BLUE);
             break;
 
         case XPANEL_TYPE_DIALOG:
             // Add elements or customize as needed for the dialog panel
-            fscl_xcube_add_element(panel->tui, "Dialog Panel", 5, 5, 20, 3);
+            fscl_xcube_add_element(panel->tui, 5, 5, 20, 3, "Dialog Panel", COLOR_BLUE);
             break;
 
         // Add cases for other panel types as needed
@@ -57,6 +104,6 @@ void fscl_xcube_switch_focus_to_panel(xui* tui, xpanel* panel) {
 void fscl_xcube_add_element_to_focused_panel(xui* tui, const char* content, int x, int y, int width, int height) {
     if (tui != NULL) {
         // Add an element to the current focused panel
-        fscl_xcube_add_element(tui, content, x, y, width, height);
+        fscl_xcube_add_element(tui, x, y, width, height, content, COLOR_BLUE);
     }
 }
