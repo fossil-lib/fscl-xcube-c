@@ -10,13 +10,24 @@ Description:
     feel free to contact Michael at michaelbrockus@gmail.com.
 ==============================================================================
 */
-#include "fossil/module.h"
+#ifndef FSCL_XCUBE_H
+#define FSCL_XCUBE_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
-int add(int a, int b) {
-    return a + b;
-} // end of func
+#include <xcube/basic.h>
+#include <xcube/button.h>
+#include <xcube/label.h>
+#include <xcube/event.h>
+#include <xcube/textbox.h>
+#include <xcube/radiobox.h>
+#include <xcube/checkbox.h>
 
-int subtract(int a, int b) {
-    return a - b;
-} // end of func
+#ifdef __cplusplus
+}
+#endif
+
+#endif
