@@ -40,7 +40,7 @@ void fscl_xcube_handle_keyboard_event(xui* ui, char key) {
         switch (key) {
             case '\b': // Backspace
                 // Remove the last character from the textbox text
-                if (strlen(focused_textbox->text) > 0) {
+                if (strlen(focused_textbox->text->content) > 0) {
                     focused_textbox->text->content[strlen(focused_textbox->text->content) - 1] = '\0';
                 }
                 break;
@@ -51,7 +51,7 @@ void fscl_xcube_handle_keyboard_event(xui* ui, char key) {
 
             default:
                 // Append the pressed key to the textbox text
-                new_length = strlen(focused_textbox->text) + 2; // +2 for the new character and null terminator
+                new_length = strlen(focused_textbox->text->content) + 2; // +2 for the new character and null terminator
                 focused_textbox->text->content = realloc(focused_textbox->text->content, new_length);
                 focused_textbox->text->content[new_length - 2] = key;
                 focused_textbox->text->content[new_length - 1] = '\0';
