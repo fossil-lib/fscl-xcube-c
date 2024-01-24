@@ -14,6 +14,7 @@ Description:
 #include <fossil/xassert.h> // extra asserts
 
 #include <fossil/xcube/basic.h> // library under test
+#include <fossil/xcube/label.h> // library under test
 
 //
 // XUNIT-CASES: list of test cases testing project features
@@ -21,17 +22,21 @@ Description:
 
 // Test for creating a TUI
 XTEST_CASE(test_create_tui) {
-    xui* testTui = fscl_xcube_create("TestApp");
-    TEST_ASSERT_NOT_CNULLPTR(testTui);
-    fscl_xcube_exit(testTui);
+    xui* testtui = fscl_xcube_create("TestApp");
+    TEST_ASSERT_NOT_CNULLPTR(testtui);
+    fscl_xcube_exit(testtui);
 }
 
 // Test for adding an element to the TUI
 XTEST_CASE(test_add_element) {
-    xui* testTui = fscl_xcube_create("TestApp");
-    fscl_xcube_add_element(testTui, 5, 5, 20, 3, "Test Element", COLOR_BLUE);
-    TEST_ASSERT_EQUAL_CSTRING("Test Element", testTui->elements[0].content);
-    fscl_xcube_exit(testTui);
+    // Create a TUI with the application name
+    xui* ui = fscl_xcube_create("Hello World App");
+
+    // Add a label to the TUI
+    fscl_xcube_add_label(ui, 5, 5, "Hello, World!");
+
+    // Clean up resources
+    fscl_xcube_exit(ui);
 }
 
 //

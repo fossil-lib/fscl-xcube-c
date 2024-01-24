@@ -15,24 +15,30 @@ Description:
 extern char* fscl_xcube_strdup(const char* str);
 
 // Function to create a button and add it to the TUI
-void fscl_xcube_add_button(xui* tui, int x, int y, int width, int height, const char* label, void (*callback)()) {
-    tui->num_buttons++;
-    tui->buttons = realloc(tui->buttons, tui->num_buttons * sizeof(xui_button));
-    xui_button* button = &(tui->buttons[tui->num_buttons - 1]);
-    button->x = x;
-    button->y = y;
-    button->width = width;
-    button->height = height;
-    button->label = fscl_xcube_strdup(label);
+void fscl_xcube_add_button(xui* ui, int x, int y, int width, int height, const char* label, void (*callback)()) {
+    ui->num_buttons++;
+    ui->buttons = realloc(ui->buttons, ui->num_buttons * sizeof(xui_button));
+    xui_button* button = &(ui->buttons[ui->num_buttons - 1]);
+    button->position->x = x;
+    button->position->y = y;
+    button->dimensions->width = width;
+    button->dimensions->height = height;
     button->callback = callback;
+
+    // Set default values for the text member
+    button->text->content = fscl_xcube_strdup(label);
+    button->text->color_front = COLOR_BLUE;
+    button->text->color_back = COLOR_BLACK;
+    button->text->bold = no;
+    button->text->emphasis = no;
 }
 
 // Function to handle button click events
-void fscl_xcube_button_click_handler(xui* tui, int mouse_x, int mouse_y) {
-    for (int i = 0; i < tui->num_buttons; i++) {
-        xui_button* button = &(tui->buttons[i]);
-        if (mouse_x >= button->x && mouse_x < button->x + button->width &&
-            mouse_y >= button->y && mouse_y < button->y + button->height) {
+void fscl_xcube_button_click_handler(xui* ui, int mouse_x, int mouse_y) {
+    for (int i = 0; i < ui->num_buttons; i++) {
+        xui_button* button = &(ui->buttons[i]);
+        if (mouse_x >= button->position->x && mouse_x < button->position->x + button->dimensions->width &&
+            mouse_y >= button->position->y && mouse_y < button->position->y + button->dimensions->height) {
             // Invoke the button's callback function
             if (button->callback != NULL) {
                 button->callback();

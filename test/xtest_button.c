@@ -25,30 +25,30 @@ void my_on_click_callback(void) {
 
 // Test for adding a button to the TUI
 XTEST_CASE(test_add_button) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a button to the TUI
-    fscl_xcube_add_button(testTui, 5, 5, 10, 3, "Click Me", NULL);
+    fscl_xcube_add_button(testtui, 5, 5, 10, 3, "Click Me", NULL);
 
     // Add assertions to check if the button is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("Click Me", testTui->buttons[0].label);
+    TEST_ASSERT_EQUAL_CSTRING("Click Me", testtui->buttons[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 // Test for clicking a button
 XTEST_CASE(test_button_click) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a button to the TUI
-    fscl_xcube_add_button(testTui, 5, 5, 10, 3, "Click Me", my_on_click_callback);
+    fscl_xcube_add_button(testtui, 5, 5, 10, 3, "Click Me", my_on_click_callback);
 
     // Simulate a button click
-    fscl_xcube_button_click_handler(testTui, 7, 6);
+    fscl_xcube_button_click_handler(testtui, 7, 6);
 
-    TEST_ASSERT_EQUAL_CSTRING("Click Me", testTui->buttons[0].label);
+    TEST_ASSERT_EQUAL_CSTRING("Click Me", testtui->buttons[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 //

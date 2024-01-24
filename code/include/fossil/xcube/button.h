@@ -21,10 +21,10 @@ extern "C"
 #include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to add a button to the TUI
-void fscl_xcube_add_button(xui* tui, int x, int y, int width, int height, const char* label, void (*callback)());
+void fscl_xcube_add_button(xui* ui, int x, int y, int width, int height, const char* label, void (*callback)());
 
 // Function to handle button click events
-void fscl_xcube_button_click_handler(xui* tui, int mouse_x, int mouse_y);
+void fscl_xcube_button_click_handler(xui* ui, int mouse_x, int mouse_y);
 
 #ifdef __cplusplus
 }

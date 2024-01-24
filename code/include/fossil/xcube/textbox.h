@@ -21,10 +21,10 @@ extern "C"
 #include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to create a textbox and add it to the TUI
-void fscl_xcube_add_textbox(xui* tui, int x, int y, int width, int height, const char* text);
+void fscl_xcube_add_textbox(xui* ui, int x, int y, int width, int height, const char* text);
 
 // Function to set the text content of a textbox
-void fscl_xcube_set_textbox_content(xui* tui, int textbox_index, const char* new_text);
+void fscl_xcube_set_textbox_content(xui* ui, int textbox_index, const char* new_text);
 
 #ifdef __cplusplus
 }

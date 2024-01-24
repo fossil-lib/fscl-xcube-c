@@ -67,48 +67,73 @@ typedef enum {
     COLOR_TOTAL // Total number of colors
 } xui_color;
 
+typedef enum {
+    no,
+    yes,
+} xbool;
+
+typedef struct {
+    char *content;
+    int color_front;
+    int color_back;
+    int bold;
+    int emphasis;
+} xtext;
+
+// Position structure for the Xcube object
+typedef struct {
+    int x;
+    int y;
+} xposition;
+
+// Dimensions structure for the Xcube object
+typedef struct {
+    int width;
+    int height;
+} xdimensions;
+
 // Define xui_element structure to represent UI elements
 typedef struct {
-    int x, y; // Position
-    int width, height; // Dimensions
-    char* content; // Content
+    xposition* position; // Position
+    xdimensions* dimensions; // Dimensions
+    xtext* text; // Contents containing a message
     xui_color color; // Color attribute
 } xui_element;
 
 // Define xui_button structure to represent buttons
 typedef struct {
-    int x, y; // Position
-    int width, height; // Dimensions
-    char* label; // Button label
+    xposition* position; // Position
+    xdimensions* dimensions; // Dimensions
+    xtext* text; // Contents containing a message
     void (*callback)(); // Callback function when button is clicked
 } xui_button;
 
 // Define xui_label structure to represent labels
 typedef struct {
-    int x, y; // Position
-    char* text; // Label text
+    xposition* position; // Position
+    xtext* text; // Contents containing a message
 } xui_label;
 
 // Define xui_textbox structure to represent textboxes
 typedef struct {
-    int x, y; // Position
-    int width, height; // Dimensions
-    char* text; // Text content
+    xposition* position; // Position
+    xdimensions* dimensions; // Dimensions
+    xtext* text; // Contents containing a message
 } xui_textbox;
 
 // Define xui_checkbox structure to represent checkboxes
 typedef struct {
-    int x, y; // Position
-    char* label; // Checkbox label
-    int checked; // Checkbox state (0 for unchecked, 1 for checked)
+    xposition* position; // Position
+    xtext* text; // Contents containing a message
+    xbool selected; // General state (0 for unselected, 1 for selected)
     void (*callback)(int); // Callback function when button is clicked
 } xui_checkbox;
 
 // Define xui_radiobox structure to represent radioboxes
 typedef struct {
-    int x, y; // Position
-    char* label; // Radiobox label
-    int selected; // Radiobox state (0 for unselected, 1 for selected)
+    xposition* position; // Position
+    xtext* text; // Contents containing a message
+    xbool selected; // General state (0 for unselected, 1 for selected)
     void (*callback)(int); // Callback function when button is clicked
 } xui_radiobox;
 
@@ -127,22 +152,16 @@ typedef struct {
     int num_textboxes; // Number of textboxes
     int num_checkboxes; // Number of checkboxes
     int num_radioboxes; // Number of radioboxes
-    int visible; // Visible state of the element
+    xbool visible; // Visible state of the element
 } xui;
 
 // =================================================================
 // TUI API functions for the XCube library
 // =================================================================
 xui* fscl_xcube_create(const char* app_name);
-void fscl_xcube_add_element(xui* tui, int x, int y, int width, int height, const char* content, xui_color color);
-void fscl_xcube_set_element_content(xui* tui, int element_index, const char* new_content);
-void fscl_xcube_move_element(xui* tui, int element_index, int new_x, int new_y);
-void fscl_xcube_resize_element(xui* tui, int element_index, int new_width, int new_height);
-void fscl_xcube_set_element_color(xui* tui, int element_index, xui_color new_color);
-void fscl_xcube_remove_element(xui* tui, int element_index);
-void fscl_xcube_display(xui* tui);
-void fscl_xcube_erase(xui* tui);
-void fscl_xcube_exit(xui* tui);
+void fscl_xcube_display(xui* ui);
+void fscl_xcube_erase(xui* ui);
+void fscl_xcube_exit(xui* ui);
 
 #ifdef __cplusplus
 }

@@ -46,176 +46,135 @@ char* fscl_xcube_strdup(const char* str) {
 
 // Function to initialize the TUI
 xui* fscl_xcube_create(const char* app_name) {
-    xui* tui = (xui*)malloc(sizeof(xui));
+    xui* ui = (xui*)malloc(sizeof(xui));
 
-    if (tui != NULL) {
-        tui->app_name = fscl_xcube_strdup(app_name);
-        tui->elements = NULL;
-        tui->buttons = NULL;
-        tui->labels = NULL;
-        tui->textboxes = NULL;
-        tui->checkboxes = NULL;
-        tui->radioboxes = NULL;
-        tui->num_elements = 0;
-        tui->num_buttons = 0;
-        tui->num_labels = 0;
-        tui->num_textboxes = 0;
-        tui->num_checkboxes = 0;
-        tui->num_radioboxes = 0;
+    if (ui != NULL) {
+        ui->app_name = fscl_xcube_strdup(app_name);
+        ui->elements = NULL;
+        ui->buttons = NULL;
+        ui->labels = NULL;
+        ui->textboxes = NULL;
+        ui->checkboxes = NULL;
+        ui->radioboxes = NULL;
+        ui->num_elements = 0;
+        ui->num_buttons = 0;
+        ui->num_labels = 0;
+        ui->num_textboxes = 0;
+        ui->num_checkboxes = 0;
+        ui->num_radioboxes = 0;
+        ui->visible = yes;
         fscl_xcube_console_clear();
     }
 
-    return tui;
-}
-
-// Function to add an element to the TUI
-void fscl_xcube_add_element(xui* tui, int x, int y, int width, int height, const char* content, xui_color color) {
-    tui->num_elements++;
-    tui->elements = realloc(tui->elements, tui->num_elements * sizeof(xui_element));
-    xui_element* elem = &(tui->elements[tui->num_elements - 1]);
-    elem->x = x;
-    elem->y = y;
-    elem->width = width;
-    elem->height = height;
-    elem->content = fscl_xcube_strdup(content);
-    elem->color = color;
-}
-
-// Function to change the content of an element
-void fscl_xcube_set_element_content(xui* tui, int element_index, const char* new_content) {
-    if (element_index >= 0 && element_index < tui->num_elements) {
-        free(tui->elements[element_index].content);
-        tui->elements[element_index].content = fscl_xcube_strdup(new_content);
-    }
-}
-
-// Function to move an element to a new position
-void fscl_xcube_move_element(xui* tui, int element_index, int new_x, int new_y) {
-    if (element_index >= 0 && element_index < tui->num_elements) {
-        tui->elements[element_index].x = new_x;
-        tui->elements[element_index].y = new_y;
-    }
-}
-
-// Function to resize an element
-void fscl_xcube_resize_element(xui* tui, int element_index, int new_width, int new_height) {
-    if (element_index >= 0 && element_index < tui->num_elements) {
-        tui->elements[element_index].width = new_width;
-        tui->elements[element_index].height = new_height;
-    }
-}
-
-// Function to change the color of an element
-void fscl_xcube_set_element_color(xui* tui, int element_index, xui_color new_color) {
-    if (element_index >= 0 && element_index < tui->num_elements) {
-        tui->elements[element_index].color = new_color;
-    }
-}
-
-// Function to remove an element
-void fscl_xcube_remove_element(xui* tui, int element_index) {
-    if (element_index >= 0 && element_index < tui->num_elements) {
-        free(tui->elements[element_index].content);
-        // Move the last element to the removed element's position
-        tui->elements[element_index] = tui->elements[tui->num_elements - 1];
-        // Decrease the number of elements
-        tui->num_elements--;
-        // Reallocate memory for elements
-        tui->elements = realloc(tui->elements, tui->num_elements * sizeof(xui_element));
-    }
+    return ui;
 }
 
 // Function to display the TUI
-void fscl_xcube_display(xui* tui) {
+void fscl_xcube_display(xui* ui) {
     // Display application name
-    printf("%s\n", tui->app_name);
+    printf("%s\n", ui->app_name);
 
     // Display each element
-    for (int i = 0; i < tui->num_elements; i++) {
-        xui_element* elem = &(tui->elements[i]);
+    for (int i = 0; i < ui->num_elements; i++) {
+        xui_element* elem = &(ui->elements[i]);
         // Set color based on the color attribute
         if (elem->color >= 0 && elem->color < COLOR_TOTAL) {
             printf("\033[38;5;%dm", elem->color); // Set color
         }
         // Position cursor and print content
-        printf("\033[%d;%dH%s", elem->y, elem->x, elem->content);
+        printf("\033[%d;%dH%s", elem->position->y, elem->position->x, elem->text->content);
         // Reset color
         printf("\033[0m");
     }
 
     // Display each button
-    for (int i = 0; i < tui->num_buttons; i++) {
-        xui_button* button = &(tui->buttons[i]);
-        printf("\033[%d;%dH[%s]", button->y, button->x, button->label);
+    for (int i = 0; i < ui->num_buttons; i++) {
+        xui_button* button = &(ui->buttons[i]);
+        printf("\033[%d;%dH[%s]", button->position->y, button->position->x, button->text->content);
     }
 
-    // Display each label
-    for (int i = 0; i < tui->num_labels; i++) {
-        xui_label* label = &(tui->labels[i]);
-        printf("\033[%d;%dH%s", label->y, label->x, label->text);
+    // Display each label with styled text
+    for (int i = 0; i < ui->num_labels; i++) {
+        xui_label* label = &(ui->labels[i]);
+        printf("\033[%d;%dH", label->position->y, label->position->x);
+
+        // Set text color and style based on attributes
+        printf("\033[38;5;%dm", label->text->color_front);
+        if (label->text->bold) {
+            printf("\033[1m"); // Set bold
+        }
+        if (label->text->emphasis) {
+            printf("\033[3m"); // Set italic/emphasis
+        }
+        // Print text content
+        printf("%s", label->text->content);
+        // Reset text style
+        printf("\033[0m");
+
+        printf("\n");
     }
 
     // Display each textbox
-    for (int i = 0; i < tui->num_textboxes; i++) {
-        xui_textbox* textbox = &(tui->textboxes[i]);
-        printf("\033[%d;%dH%s", textbox->y, textbox->x, textbox->text);
+    for (int i = 0; i < ui->num_textboxes; i++) {
+        xui_textbox* textbox = &(ui->textboxes[i]);
+        printf("\033[%d;%dH%s", textbox->position->y, textbox->position->x, textbox->text->content);
     }
 
     // Display each checkbox
-    for (int i = 0; i < tui->num_checkboxes; i++) {
-        xui_checkbox* checkbox = &(tui->checkboxes[i]);
-        printf("\033[%d;%dH[%c] %s", checkbox->y, checkbox->x, checkbox->checked ? 'X' : ' ', checkbox->label);
+    for (int i = 0; i < ui->num_checkboxes; i++) {
+        xui_checkbox* checkbox = &(ui->checkboxes[i]);
+        printf("\033[%d;%dH[%c] %s", checkbox->position->y, checkbox->position->x, checkbox->selected ? 'X' : ' ', checkbox->text->content);
     }
 
     // Display each radiobox
-    for (int i = 0; i < tui->num_radioboxes; i++) {
-        xui_radiobox* radiobox = &(tui->radioboxes[i]);
-        printf("\033[%d;%dH(%c) %s", radiobox->y, radiobox->x, radiobox->selected ? 'O' : ' ', radiobox->label);
+    for (int i = 0; i < ui->num_radioboxes; i++) {
+        xui_radiobox* radiobox = &(ui->radioboxes[i]);
+        printf("\033[%d;%dH(%c) %s", radiobox->position->y, radiobox->position->x, radiobox->selected ? 'O' : ' ', radiobox->text->content);
     }
 
     fflush(stdout);
 }
 
 // Function to erase the TUI
-void fscl_xcube_erase(xui* tui) {
+void fscl_xcube_erase(xui* ui) {
     // Clear the screen
     printf("\033[2J");
     fflush(stdout);
 }
 
 // Function to clean up and exit
-void fscl_xcube_exit(xui* tui) {
-    free(tui->app_name); // Free application name memory
+void fscl_xcube_exit(xui* ui) {
+    free(ui->app_name); // Free application name memory
 
-    for (int i = 0; i < tui->num_elements; i++) {
-        free(tui->elements[i].content);
+    for (int i = 0; i < ui->num_elements; i++) {
+        free(ui->elements[i].text->content);
     }
-    free(tui->elements); // Free UI elements memory
+    free(ui->elements); // Free UI elements memory
 
-    for (int i = 0; i < tui->num_buttons; i++) {
-        free(tui->buttons[i].label);
+    for (int i = 0; i < ui->num_buttons; i++) {
+        free(ui->buttons[i].text->content);
     }
-    free(tui->buttons); // Free buttons memory
+    free(ui->buttons); // Free buttons memory
 
-    for (int i = 0; i < tui->num_labels; i++) {
-        free(tui->labels[i].text);
+    for (int i = 0; i < ui->num_labels; i++) {
+        free(ui->labels[i].text);
     }
-    free(tui->labels); // Free labels memory
+    free(ui->labels); // Free labels memory
 
-    for (int i = 0; i < tui->num_textboxes; i++) {
-        free(tui->textboxes[i].text);
+    for (int i = 0; i < ui->num_textboxes; i++) {
+        free(ui->textboxes[i].text);
     }
-    free(tui->textboxes); // Free textboxes memory
+    free(ui->textboxes); // Free textboxes memory
 
-    for (int i = 0; i < tui->num_checkboxes; i++) {
-        free(tui->checkboxes[i].label);
+    for (int i = 0; i < ui->num_checkboxes; i++) {
+        free(ui->checkboxes[i].text->content);
     }
-    free(tui->checkboxes); // Free checkboxes memory
+    free(ui->checkboxes); // Free checkboxes memory
 
-    for (int i = 0; i < tui->num_radioboxes; i++) {
-        free(tui->radioboxes[i].label);
+    for (int i = 0; i < ui->num_radioboxes; i++) {
+        free(ui->radioboxes[i].text->content);
     }
-    free(tui->radioboxes); // Free radioboxes memory
-    free(tui);
+    free(ui->radioboxes); // Free radioboxes memory
+    free(ui);
     fscl_xcube_console_clear();
 }

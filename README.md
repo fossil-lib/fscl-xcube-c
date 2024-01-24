@@ -5,16 +5,17 @@ Fossil Standard Component Libraries (FSCL) by Fossil Logic represent the pinnacl
 Unleash your creativity in the visual realm with XCude 2D Graphics. This library is a powerhouse for 2D graphics, offering a versatile set of tools and functions to bring your visualizations to life. From rendering to animation, XCude 2D Graphics empowers developers to craft visually stunning and immersive user experiences.
 
 ```c
-#include <fossil/xcube.h>
+#include <fossil/xcube/basic.h>
+#include <fossil/xcube/label.h>
 
 int main() {
-    // Create a TUI with the application name
+    // Create TUI
     xui* ui = fscl_xcube_create("Hello World App");
 
-    // Add a "Hello, World!" element to the TUI
-    fscl_xcube_add_element(ui, 5, 5, 20, 3, "Hello, World!", COLOR_BLUE);
+    // Add a label to the TUI
+    fscl_xcube_add_label(ui, 5, 5, "Hello, World!");
 
-    // Display the TUI
+    // Display TUI
     fscl_xcube_display(ui);
 
     // Main event-handling loop
@@ -25,7 +26,10 @@ int main() {
         loop = XLOOP_INACTIVE;
     }
 
-    // Clean up resources
+    // Erase TUI (optional)
+    fscl_xcube_erase(ui);
+
+    // Exit TUI
     fscl_xcube_exit(ui);
 
     return 0;

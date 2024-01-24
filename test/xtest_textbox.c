@@ -21,33 +21,33 @@ Description:
 
 // Test for adding a textbox to the TUI
 XTEST_CASE(test_add_textbox) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a textbox to the TUI
     char textBuffer[100]; // Adjust the size based on your needs
-    fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer);
+    fscl_xcube_add_textbox(testtui, 5, 5, 20, 5, textBuffer);
 
     // Add assertions to check if the textbox is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("", testTui->textboxes[0].text);
+    TEST_ASSERT_EQUAL_CSTRING("", testtui->textboxes[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 // Test for updating textbox content
 XTEST_CASE(test_update_textbox) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a textbox to the TUI
     char textBuffer[100]; // Adjust the size based on your needs
-    fscl_xcube_add_textbox(testTui, 5, 5, 20, 5, textBuffer);
+    fscl_xcube_add_textbox(testtui, 5, 5, 20, 5, textBuffer);
 
     // Update the textbox content
-    fscl_xcube_set_textbox_content(testTui, 0, "Updated Text");
+    fscl_xcube_set_textbox_content(testtui, 0, "Updated Text");
 
     // Add assertions to check if the textbox content is updated
-    TEST_ASSERT_EQUAL_CSTRING("Updated Text", testTui->textboxes[0].text);
+    TEST_ASSERT_EQUAL_CSTRING("Updated Text", testtui->textboxes[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 //
