@@ -25,32 +25,32 @@ void my_callback(int arg) {
 
 // Test for adding a radio box to the TUI
 XTEST_CASE(test_add_radiobox) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a radio box to the TUI
-    fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
+    fscl_xcube_add_radiobox(testtui, 5, 5, "Option 1", my_callback);
 
     // Add assertions to check if the radio box is added successfully
     TEST_ASSERT_EQUAL_CSTRING("Option 1", testui->radioboxes[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 // Test for selecting a radio box option
 XTEST_CASE(test_select_radiobox_option) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a radio box to the TUI
     int selectedOption = 0;
-    fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
+    fscl_xcube_add_radiobox(testtui, 5, 5, "Option 1", my_callback);
 
     // Select a radio box option
-    fscl_xcube_radiobox_state_change_handler(testTui, 7, 6);
+    fscl_xcube_radiobox_state_change_handler(testtui, 7, 6);
 
     // Add assertions to check if the selected option is updated
     TEST_ASSERT_EQUAL(1, selectedOption);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 //

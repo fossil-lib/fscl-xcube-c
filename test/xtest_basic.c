@@ -22,9 +22,9 @@ Description:
 
 // Test for creating a TUI
 XTEST_CASE(test_create_tui) {
-    xui* testTui = fscl_xcube_create("TestApp");
-    TEST_ASSERT_NOT_CNULLPTR(testTui);
-    fscl_xcube_exit(testTui);
+    xui* testtui = fscl_xcube_create("TestApp");
+    TEST_ASSERT_NOT_CNULLPTR(testtui);
+    fscl_xcube_exit(testtui);
 }
 
 // Test for adding an element to the TUI

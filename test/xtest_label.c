@@ -21,31 +21,31 @@ Description:
 
 // Test for adding a label to the TUI
 XTEST_CASE(test_add_label) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a label to the TUI
-    fscl_xcube_add_label(testTui, 5, 5, "Test Label");
+    fscl_xcube_add_label(testtui, 5, 5, "Test Label");
 
     // Add assertions to check if the label is added successfully
     TEST_ASSERT_EQUAL_CSTRING("Test Label", testui->labels[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 // Test for updating label content
 XTEST_CASE(test_update_label) {
-    xui* testTui = fscl_xcube_create("TestApp");
+    xui* testtui = fscl_xcube_create("TestApp");
 
     // Add a label to the TUI
-    fscl_xcube_add_label(testTui, 5, 5, "Test Label");
+    fscl_xcube_add_label(testtui, 5, 5, "Test Label");
 
     // Update the label content
-    fscl_xcube_set_label_content(testTui, 0, "Updated Label");
+    fscl_xcube_set_label_content(testtui, 0, "Updated Label");
 
     // Add assertions to check if the label content is updated
     TEST_ASSERT_EQUAL_CSTRING("Updated Label", testui->labels[0].text->content);
 
-    fscl_xcube_exit(testTui);
+    fscl_xcube_exit(testtui);
 }
 
 //
