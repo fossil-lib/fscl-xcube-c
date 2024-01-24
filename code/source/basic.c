@@ -97,21 +97,20 @@ void fscl_xcube_display(xui* ui) {
     for (int i = 0; i < ui->num_labels; i++) {
         xui_label* label = &(ui->labels[i]);
         printf("\033[%d;%dH", label->position->y, label->position->x);
-        for (int j = 0; j < label->text; j++) {
-            xtext* text_content = &(label->text->content[j]);
-            // Set text color and style based on attributes
-            printf("\033[38;5;%dm", text_content->color_front);
-            if (text_content->bold) {
-                printf("\033[1m"); // Set bold
-            }
-            if (text_content->emphasis) {
-                printf("\033[3m"); // Set italic/emphasis
-            }
-            // Print text content
-            printf("%s", text_content->content);
-            // Reset text style
-            printf("\033[0m");
+
+        // Set text color and style based on attributes
+        printf("\033[38;5;%dm", label->text->color_front);
+        if (label->text->bold) {
+            printf("\033[1m"); // Set bold
         }
+        if (label->text->emphasis) {
+            printf("\033[3m"); // Set italic/emphasis
+        }
+        // Print text content
+        printf("%s", label->text->content);
+        // Reset text style
+        printf("\033[0m");
+
         printf("\n");
     }
 
