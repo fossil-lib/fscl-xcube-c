@@ -31,7 +31,7 @@ XTEST_CASE(test_add_checkbox) {
     fscl_xcube_add_checkbox(testTui, 5, 5, "Checkbox", my_on_check_callback);
 
     // Add assertions to check if the checkbox is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("Checkbox", testTui->checkboxes[0].label);
+    TEST_ASSERT_EQUAL_CSTRING("Checkbox", testui->checkboxes[0].text->content);
 
     fscl_xcube_exit(testTui);
 }
@@ -47,7 +47,7 @@ XTEST_CASE(test_toggle_checkbox) {
     fscl_xcube_checkbox_state_change_handler(testTui, 7, 6);
 
     // Add assertions to check if the checkbox is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("Checkbox", testTui->checkboxes[0].label);
+    TEST_ASSERT_EQUAL_CSTRING("Checkbox", testui->checkboxes[0].text->content);
 
     fscl_xcube_exit(testTui);
 }

@@ -27,7 +27,7 @@ XTEST_CASE(test_add_label) {
     fscl_xcube_add_label(testTui, 5, 5, "Test Label");
 
     // Add assertions to check if the label is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("Test Label", testTui->labels[0].text);
+    TEST_ASSERT_EQUAL_CSTRING("Test Label", testui->labels[0].text->content);
 
     fscl_xcube_exit(testTui);
 }
@@ -43,7 +43,7 @@ XTEST_CASE(test_update_label) {
     fscl_xcube_set_label_content(testTui, 0, "Updated Label");
 
     // Add assertions to check if the label content is updated
-    TEST_ASSERT_EQUAL_CSTRING("Updated Label", testTui->labels[0].text);
+    TEST_ASSERT_EQUAL_CSTRING("Updated Label", testui->labels[0].text->content);
 
     fscl_xcube_exit(testTui);
 }

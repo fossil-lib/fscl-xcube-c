@@ -31,7 +31,7 @@ XTEST_CASE(test_add_radiobox) {
     fscl_xcube_add_radiobox(testTui, 5, 5, "Option 1", my_callback);
 
     // Add assertions to check if the radio box is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("Option 1", testTui->radioboxes[0].label);
+    TEST_ASSERT_EQUAL_CSTRING("Option 1", testui->radioboxes[0].text->content);
 
     fscl_xcube_exit(testTui);
 }
