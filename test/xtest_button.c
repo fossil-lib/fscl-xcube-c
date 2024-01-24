@@ -31,7 +31,7 @@ XTEST_CASE(test_add_button) {
     fscl_xcube_add_button(testTui, 5, 5, 10, 3, "Click Me", NULL);
 
     // Add assertions to check if the button is added successfully
-    TEST_ASSERT_EQUAL_CSTRING("Click Me", testui->buttons[0].text->content);
+    TEST_ASSERT_EQUAL_CSTRING("Click Me", testTui->buttons[0].text->content);
 
     fscl_xcube_exit(testTui);
 }
@@ -46,7 +46,7 @@ XTEST_CASE(test_button_click) {
     // Simulate a button click
     fscl_xcube_button_click_handler(testTui, 7, 6);
 
-    TEST_ASSERT_EQUAL_CSTRING("Click Me", testui->buttons[0].text->content);
+    TEST_ASSERT_EQUAL_CSTRING("Click Me", testTui->buttons[0].text->content);
 
     fscl_xcube_exit(testTui);
 }
