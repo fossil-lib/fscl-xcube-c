@@ -97,7 +97,7 @@ void fscl_xcube_display(xui* ui) {
     for (int i = 0; i < ui->num_labels; i++) {
         xui_label* label = &(ui->labels[i]);
         printf("\033[%d;%dH", label->position->y, label->position->x);
-        for (int j = 0; j < label->text->content; j++) {
+        for (int j = 0; j < label->text; j++) {
             xtext* text_content = &(label->text->content[j]);
             // Set text color and style based on attributes
             printf("\033[38;5;%dm", text_content->color_front);

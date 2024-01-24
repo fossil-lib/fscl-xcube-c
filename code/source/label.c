@@ -37,5 +37,5 @@ void fscl_xcube_set_label_content(xui* ui, int label_index, const char* new_cont
     }
 
     // Update the content of the specified label using strcpy
-    strcpy(ui->labels[label_index].text, new_content);
+    strcpy(ui->labels[label_index].text->content, new_content);
 }

@@ -36,6 +36,6 @@ void fscl_xcube_add_textbox(xui* ui, int x, int y, int width, int height, const 
 void fscl_xcube_set_textbox_content(xui* ui, int textbox_index, const char* new_text) {
     if (textbox_index >= 0 && textbox_index < ui->num_textboxes) {
         free(ui->textboxes[textbox_index].text);
-        ui->textboxes[textbox_index].text = fscl_xcube_strdup(new_text);
+        ui->textboxes[textbox_index].text->content = fscl_xcube_strdup(new_text);
     }
 }
