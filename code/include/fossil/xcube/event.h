@@ -21,10 +21,10 @@ extern "C"
 #include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to handle mouse events
-void fscl_xcube_handle_mouse_event(xui* tui, int mouse_x, int mouse_y);
+void fscl_xcube_handle_mouse_event(xui* ui, int mouse_x, int mouse_y);
 
 // Function to handle keyboard events
-void fscl_xcube_handle_keyboard_event(xui* tui, char key);
+void fscl_xcube_handle_keyboard_event(xui* ui, char key);
 
 #ifdef __cplusplus
 }

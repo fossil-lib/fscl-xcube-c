@@ -21,10 +21,10 @@ extern "C"
 #include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to add a label to the TUI
-void fscl_xcube_add_label(xui* tui, int x, int y, const char* text);
+void fscl_xcube_add_label(xui* ui, int x, int y, const char* text);
 
 // Function updates the content of the specified label.
-void fscl_xcube_set_label_content(xui* tui, int label_index, const char* new_content);
+void fscl_xcube_set_label_content(xui* ui, int label_index, const char* new_content);
 
 #ifdef __cplusplus
 }

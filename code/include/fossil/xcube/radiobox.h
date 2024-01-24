@@ -21,13 +21,13 @@ extern "C"
 #include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to create a radiobox and add it to the TUI
-void fscl_xcube_add_radiobox(xui* tui, int x, int y, const char* label, void (*callback)(int));
+void fscl_xcube_add_radiobox(xui* ui, int x, int y, const char* label, void (*callback)(int));
 
 // Function to handle radiobox state changes
-void fscl_xcube_radiobox_state_change_handler(xui* tui, int mouse_x, int mouse_y);
+void fscl_xcube_radiobox_state_change_handler(xui* ui, int mouse_x, int mouse_y);
 
 // Function to set the state of a radiobox
-void fscl_xcube_set_radiobox_state(xui* tui, int radiobox_index, int new_state);
+void fscl_xcube_set_radiobox_state(xui* ui, int radiobox_index, int new_state);
 
 #ifdef __cplusplus
 }

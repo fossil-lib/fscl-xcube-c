@@ -21,13 +21,13 @@ extern "C"
 #include <fossil/xcube/basic.h> // all basic cube code
 
 // Function to create a checkbox and add it to the TUI
-void fscl_xcube_add_checkbox(xui* tui, int x, int y, const char* label, void (*callback)(int));
+void fscl_xcube_add_checkbox(xui* ui, int x, int y, const char* label, void (*callback)(int));
 
 // Function to handle checkbox state changes
-void fscl_xcube_checkbox_state_change_handler(xui* tui, int mouse_x, int mouse_y);
+void fscl_xcube_checkbox_state_change_handler(xui* ui, int mouse_x, int mouse_y);
 
 // Function to set the state of a checkbox
-void fscl_xcube_set_checkbox_state(xui* tui, int checkbox_index, int new_state);
+void fscl_xcube_set_checkbox_state(xui* ui, int checkbox_index, int new_state);
 
 #ifdef __cplusplus
 }
