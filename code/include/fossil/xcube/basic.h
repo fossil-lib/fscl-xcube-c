@@ -158,10 +158,36 @@ typedef struct {
 // =================================================================
 // TUI API functions for the XCube library
 // =================================================================
+
+/**
+ * Creates an XCube user interface.
+ *
+ * @param app_name The name of the application.
+ * @return A pointer to the created XCube UI.
+ */
 xui* fscl_xcube_create(const char* app_name);
+
+/**
+ * Displays the XCube user interface.
+ *
+ * @param ui The XCube UI to display.
+ */
 void fscl_xcube_display(xui* ui);
+
+/**
+ * Erases the XCube user interface.
+ *
+ * @param ui The XCube UI to erase.
+ */
 void fscl_xcube_erase(xui* ui);
+
+/**
+ * Exits the XCube user interface.
+ *
+ * @param ui The XCube UI to exit.
+ */
 void fscl_xcube_exit(xui* ui);
+
 
 #ifdef __cplusplus
 }
