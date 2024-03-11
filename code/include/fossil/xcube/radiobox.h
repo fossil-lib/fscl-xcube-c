@@ -20,13 +20,33 @@ extern "C"
 
 #include <fossil/xcube/basic.h> // all basic cube code
 
-// Function to create a radiobox and add it to the TUI
+/**
+ * Adds a radiobox to the XCube TUI.
+ *
+ * @param ui The XCube UI to which the radiobox will be added.
+ * @param x The x-coordinate of the radiobox.
+ * @param y The y-coordinate of the radiobox.
+ * @param label The label text for the radiobox.
+ * @param callback The callback function to be triggered on radiobox state changes.
+ */
 void fscl_xcube_add_radiobox(xui* ui, int x, int y, const char* label, void (*callback)(int));
 
-// Function to handle radiobox state changes
+/**
+ * Handles radiobox state changes in the XCube TUI.
+ *
+ * @param ui The XCube UI containing the radiobox.
+ * @param mouse_x The x-coordinate of the mouse event.
+ * @param mouse_y The y-coordinate of the mouse event.
+ */
 void fscl_xcube_radiobox_state_change_handler(xui* ui, int mouse_x, int mouse_y);
 
-// Function to set the state of a radiobox
+/**
+ * Sets the state of a radiobox in the XCube TUI.
+ *
+ * @param ui The XCube UI containing the radiobox.
+ * @param radiobox_index The index of the radiobox to be updated.
+ * @param new_state The new state for the radiobox.
+ */
 void fscl_xcube_set_radiobox_state(xui* ui, int radiobox_index, int new_state);
 
 #ifdef __cplusplus
