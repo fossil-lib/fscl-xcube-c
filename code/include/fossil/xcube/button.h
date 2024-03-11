@@ -20,10 +20,26 @@ extern "C"
 
 #include <fossil/xcube/basic.h> // all basic cube code
 
-// Function to add a button to the TUI
+/**
+ * Adds a button to the XCube TUI.
+ *
+ * @param ui The XCube UI to which the button will be added.
+ * @param x The x-coordinate of the button.
+ * @param y The y-coordinate of the button.
+ * @param width The width of the button.
+ * @param height The height of the button.
+ * @param label The label text for the button.
+ * @param callback The callback function to be executed when the button is clicked.
+ */
 void fscl_xcube_add_button(xui* ui, int x, int y, int width, int height, const char* label, void (*callback)());
 
-// Function to handle button click events
+/**
+ * Handles button click events in the XCube TUI.
+ *
+ * @param ui The XCube UI that contains the button.
+ * @param mouse_x The x-coordinate of the mouse click.
+ * @param mouse_y The y-coordinate of the mouse click.
+ */
 void fscl_xcube_button_click_handler(xui* ui, int mouse_x, int mouse_y);
 
 #ifdef __cplusplus
