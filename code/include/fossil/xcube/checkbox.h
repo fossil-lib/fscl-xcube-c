@@ -20,13 +20,33 @@ extern "C"
 
 #include <fossil/xcube/basic.h> // all basic cube code
 
-// Function to create a checkbox and add it to the TUI
+/**
+ * Adds a checkbox to the XCube TUI.
+ *
+ * @param ui The XCube UI to which the checkbox will be added.
+ * @param x The x-coordinate of the checkbox.
+ * @param y The y-coordinate of the checkbox.
+ * @param label The label text for the checkbox.
+ * @param callback The callback function to be executed when the checkbox state changes.
+ */
 void fscl_xcube_add_checkbox(xui* ui, int x, int y, const char* label, void (*callback)(int));
 
-// Function to handle checkbox state changes
+/**
+ * Handles checkbox state changes in the XCube TUI.
+ *
+ * @param ui The XCube UI that contains the checkbox.
+ * @param mouse_x The x-coordinate of the mouse click.
+ * @param mouse_y The y-coordinate of the mouse click.
+ */
 void fscl_xcube_checkbox_state_change_handler(xui* ui, int mouse_x, int mouse_y);
 
-// Function to set the state of a checkbox
+/**
+ * Sets the state of a checkbox in the XCube TUI.
+ *
+ * @param ui The XCube UI that contains the checkbox.
+ * @param checkbox_index The index of the checkbox.
+ * @param new_state The new state of the checkbox (0 for unchecked, 1 for checked).
+ */
 void fscl_xcube_set_checkbox_state(xui* ui, int checkbox_index, int new_state);
 
 #ifdef __cplusplus
